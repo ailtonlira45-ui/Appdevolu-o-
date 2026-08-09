@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Painel Multiplex - Marcopolo</title>
+    <title>Painel Multiplex</title>
     <style>
         * {
             margin: 0;
@@ -16,7 +16,7 @@
             width: 100%;
             height: 100%;
             overflow: hidden;
-            background: #0a0a14;
+            background: #000000;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             -webkit-tap-highlight-color: transparent;
             user-select: none;
@@ -28,7 +28,7 @@
             width: 100vw;
             height: 100vh;
             height: 100dvh;
-            background: linear-gradient(180deg, #1a1a2e 0%, #12121f 50%, #0a0a14 100%);
+            background: #000000;
             display: flex;
             flex-direction: column;
             padding: 12px 16px;
@@ -43,23 +43,14 @@
             flex-shrink: 0;
         }
 
-        .painel-header .marca {
-            color: #ff8c42;
-            font-size: clamp(1.5em, 3.5vw, 2em);
-            font-weight: 900;
-            letter-spacing: 5px;
-            text-shadow: 0 0 20px rgba(255, 140, 66, 0.8), 0 0 40px rgba(255, 140, 66, 0.4);
-            line-height: 1;
-        }
-
         .painel-header h1 {
-            color: #999;
-            font-size: clamp(0.75em, 1.8vw, 0.9em);
-            font-weight: 600;
-            letter-spacing: 3px;
+            color: #ffffff;
+            font-size: clamp(1em, 2.2vw, 1.3em);
+            font-weight: 700;
+            letter-spacing: 4px;
             text-transform: uppercase;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
-            margin-top: 4px;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5), 0 0 40px rgba(255, 255, 255, 0.2);
+            margin-top: 0;
         }
 
         .grid-botoes {
@@ -103,12 +94,12 @@
             min-width: 0;
             word-break: break-word;
             text-align: center;
-            background: linear-gradient(180deg, #2d2d3f 0%, #252535 50%, #1e1e2e 100%);
+            background: linear-gradient(180deg, #1a1a1a 0%, #0d0d0d 50%, #000000 100%);
             box-shadow:
-                0 7px 0 #151525,
-                0 9px 18px rgba(0, 0, 0, 0.6);
-            border: 2.5px solid #3a3a4a;
-            border-bottom: 2.5px solid #151525;
+                0 7px 0 #0a0a0a,
+                0 9px 18px rgba(0, 0, 0, 0.8);
+            border: 2.5px solid #2a2a2a;
+            border-bottom: 2.5px solid #0a0a0a;
         }
 
         .botao-3d::before {
@@ -119,15 +110,15 @@
             right: 0;
             height: 50%;
             border-radius: 13px 13px 0 0;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, transparent 100%);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, transparent 100%);
             pointer-events: none;
         }
 
         .botao-3d:active {
             transform: translateY(5px);
             box-shadow:
-                0 2px 0 #151525,
-                0 4px 10px rgba(0, 0, 0, 0.6);
+                0 2px 0 #0a0a0a,
+                0 4px 10px rgba(0, 0, 0, 0.8);
             transition: all 0.06s ease;
         }
 
@@ -136,15 +127,15 @@
             border-color: #ff8c42;
             border-bottom-color: #cc5500;
             box-shadow:
-                0 7px 0 #994400,
-                0 9px 18px rgba(0, 0, 0, 0.6),
-                inset 0 0 20px rgba(255, 140, 66, 0.2);
+                0 7px 0 #662200,
+                0 9px 18px rgba(0, 0, 0, 0.8),
+                inset 0 0 20px rgba(255, 140, 66, 0.15);
         }
         .botao-laranja:hover {
             box-shadow:
-                0 7px 0 #994400,
-                0 9px 25px rgba(255, 140, 66, 0.6),
-                inset 0 0 25px rgba(255, 140, 66, 0.3);
+                0 7px 0 #662200,
+                0 9px 25px rgba(255, 140, 66, 0.5),
+                inset 0 0 25px rgba(255, 140, 66, 0.25);
         }
 
         /* Relevo Verde */
@@ -152,25 +143,25 @@
             border-color: #2ecc71;
             border-bottom-color: #1a7a43;
             box-shadow:
-                0 7px 0 #0d5c2e,
-                0 9px 18px rgba(0, 0, 0, 0.6),
-                inset 0 0 20px rgba(46, 204, 113, 0.2);
+                0 7px 0 #0a3d1e,
+                0 9px 18px rgba(0, 0, 0, 0.8),
+                inset 0 0 20px rgba(46, 204, 113, 0.15);
         }
         .botao-verde:hover {
             box-shadow:
-                0 7px 0 #0d5c2e,
-                0 9px 25px rgba(46, 204, 113, 0.6),
-                inset 0 0 25px rgba(46, 204, 113, 0.3);
+                0 7px 0 #0a3d1e,
+                0 9px 25px rgba(46, 204, 113, 0.5),
+                inset 0 0 25px rgba(46, 204, 113, 0.25);
         }
 
         /* Estado SELECIONADO - Brilho intenso */
         .botao-3d.selecionado {
-            background: linear-gradient(180deg, #3a3a50 0%, #303045 50%, #282838 100%) !important;
+            background: linear-gradient(180deg, #1a1a1a 0%, #0d0d0d 50%, #000000 100%) !important;
             transform: translateY(4px) !important;
             box-shadow:
-                0 3px 0 #151525,
+                0 3px 0 #0a0a0a,
                 0 5px 15px rgba(255, 255, 255, 0.3),
-                inset 0 0 30px rgba(255, 255, 255, 0.4),
+                inset 0 0 30px rgba(255, 255, 255, 0.3),
                 0 0 25px rgba(255, 200, 100, 0.8),
                 0 0 50px rgba(100, 255, 150, 0.6),
                 0 0 75px rgba(255, 150, 50, 0.4) !important;
@@ -182,18 +173,18 @@
         @keyframes brilhoSelecao {
             0% {
                 box-shadow:
-                    0 3px 0 #151525,
+                    0 3px 0 #0a0a0a,
                     0 5px 15px rgba(255, 255, 255, 0.3),
-                    inset 0 0 30px rgba(255, 255, 255, 0.4),
+                    inset 0 0 30px rgba(255, 255, 255, 0.3),
                     0 0 25px rgba(255, 200, 100, 0.8),
                     0 0 50px rgba(100, 255, 150, 0.6),
                     0 0 75px rgba(255, 150, 50, 0.4);
             }
             100% {
                 box-shadow:
-                    0 3px 0 #151525,
+                    0 3px 0 #0a0a0a,
                     0 5px 15px rgba(255, 255, 255, 0.5),
-                    inset 0 0 40px rgba(255, 255, 255, 0.6),
+                    inset 0 0 40px rgba(255, 255, 255, 0.5),
                     0 0 35px rgba(255, 200, 100, 1),
                     0 0 65px rgba(100, 255, 150, 0.9),
                     0 0 90px rgba(255, 150, 50, 0.6);
@@ -205,26 +196,26 @@
             width: clamp(32px, 7vw, 42px);
             height: clamp(32px, 7vw, 42px);
             margin-bottom: 4px;
-            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.6));
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.8));
             transition: all 0.2s ease;
         }
 
         .botao-3d:active .icone-svg {
             transform: scale(0.9);
-            filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.4));
+            filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.6));
         }
 
         .selecionado .icone-svg {
-            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.6));
+            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.8));
             animation: iconeBrilho 1.5s ease-in-out infinite alternate;
         }
 
         @keyframes iconeBrilho {
             0% {
-                filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.6)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.6));
+                filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.6)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.8));
             }
             100% {
-                filter: drop-shadow(0 0 12px rgba(255, 255, 255, 1)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.6));
+                filter: drop-shadow(0 0 12px rgba(255, 255, 255, 1)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.8));
             }
         }
 
@@ -242,13 +233,13 @@
         }
 
         .botao-label {
-            color: #888;
+            color: #999;
             font-size: clamp(0.55em, 1.3vw, 0.65em);
             font-weight: 600;
             letter-spacing: 1px;
             text-transform: uppercase;
             text-align: center;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
             line-height: 1.1;
             margin-top: 3px;
         }
@@ -257,8 +248,8 @@
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            background: #1a1a1a;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+            background: #0a0a0a;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.9);
             flex-shrink: 0;
             transition: all 0.3s ease;
         }
@@ -283,7 +274,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 10px 0;
-            border-top: 1px solid #2a2a3a;
+            border-top: 1px solid #1a1a1a;
             flex-shrink: 0;
             margin-top: 10px;
         }
@@ -292,7 +283,7 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            color: #777;
+            color: #888;
             font-size: clamp(0.65em, 1.4vw, 0.75em);
             font-weight: 600;
             letter-spacing: 2px;
@@ -321,8 +312,8 @@
         }
 
         .btn-reset {
-            background: #2a2a35;
-            border: 2.5px solid #555;
+            background: #0d0d0d;
+            border: 2.5px solid #333;
             color: #aaa;
             padding: 10px 22px;
             border-radius: 22px;
@@ -332,14 +323,14 @@
             letter-spacing: 2px;
             transition: all 0.3s;
             text-transform: uppercase;
-            box-shadow: 0 5px 0 #1a1a24;
+            box-shadow: 0 5px 0 #050505;
         }
 
         .btn-reset:active {
-            background: #444;
+            background: #1a1a1a;
             color: #fff;
             transform: translateY(3px);
-            box-shadow: 0 2px 0 #1a1a24;
+            box-shadow: 0 2px 0 #050505;
         }
 
         @media (max-width: 600px) and (orientation: landscape) {
@@ -414,7 +405,6 @@
 <body>
     <div class="painel-fullscreen">
         <div class="painel-header">
-            <div class="marca">MARCOPOLO</div>
             <h1>Painel Multiplex</h1>
         </div>
 
@@ -597,7 +587,6 @@
             const led = document.getElementById('led-' + nome);
 
             if (!estadoBotoes[nome]) {
-                // LIGAR - Adiciona classe selecionado
                 estadoBotoes[nome] = true;
                 botao.classList.add('selecionado');
                 if (led) {
@@ -610,7 +599,6 @@
 
                 console.log(`✅ Botão ${nome}: LIGADO (selecionado)`);
             } else {
-                // DESLIGAR - Remove classe selecionado
                 estadoBotoes[nome] = false;
                 botao.classList.remove('selecionado');
                 if (led) {
@@ -650,7 +638,6 @@
                 estadoBotoes[nome] = false;
             });
 
-            // Prevenir zoom e gestos indesejados
             document.addEventListener('gesturestart', function(e) {
                 e.preventDefault();
             });
@@ -661,7 +648,6 @@
                 e.preventDefault();
             });
 
-            // Prevenir scroll acidental nos botões
             document.querySelectorAll('.botao-3d').forEach(botao => {
                 botao.addEventListener('touchstart', function(e) {
                     e.stopPropagation();
