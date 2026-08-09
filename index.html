@@ -2,8 +2,8 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Painel Multiplex - Live Stream</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Painel Multiplex - Marcopolo</title>
     <style>
         * {
             box-sizing: border-box;
@@ -12,8 +12,10 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             user-select: none;
             -webkit-user-select: none;
+            -webkit-tap-highlight-color: transparent;
         }
 
+        html,
         body {
             background-color: #0b0f19;
             color: #ffffff;
@@ -21,21 +23,28 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
+            height: 100dvh;
             width: 100vw;
             overflow: hidden;
+            position: fixed;
+            top: 0;
+            left: 0;
         }
 
         .multiplex-container {
             background: linear-gradient(145deg, #161b22, #0d1117);
             border: 4px solid #30363d;
-            border-radius: 16px;
-            width: 96vw;
-            height: 94vh;
-            padding: 15px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.9), inset 0 0 20px rgba(0,255,204,0.05);
+            border-radius: 18px;
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh;
+            padding: 10px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.9), inset 0 0 25px rgba(255, 255, 255, 0.03);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            max-width: 100%;
+            max-height: 100%;
         }
 
         .header {
@@ -45,92 +54,162 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-shrink: 0;
+            min-height: 40px;
         }
 
         .header h1 {
-            font-size: 1.1rem;
-            color: #00ffcc;
-            letter-spacing: 2px;
+            font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+            color: #ffffff;
+            letter-spacing: 3px;
             text-transform: uppercase;
-            text-shadow: 0 0 10px rgba(0,255,204,0.5);
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+            font-weight: 900;
+            margin: 0;
+            line-height: 1;
         }
 
         .live-badge {
             background: #da3633;
             color: white;
-            font-size: 0.75rem;
-            font-weight: bold;
-            padding: 3px 8px;
-            border-radius: 4px;
-            letter-spacing: 1px;
-            box-shadow: 0 0 10px rgba(218,54,51,0.6);
+            font-size: clamp(0.7rem, 1.3vw, 0.9rem);
+            font-weight: 900;
+            padding: 5px 12px;
+            border-radius: 5px;
+            letter-spacing: 2px;
+            box-shadow: 0 0 12px rgba(218, 54, 51, 0.7);
+            animation: pulseLive 1.2s ease-in-out infinite alternate;
+            white-space: nowrap;
+        }
+
+        @keyframes pulseLive {
+            0% {
+                box-shadow: 0 0 12px rgba(218, 54, 51, 0.7);
+                transform: scale(1);
+            }
+            100% {
+                box-shadow: 0 0 22px rgba(218, 54, 51, 1), 0 0 35px rgba(218, 54, 51, 0.5);
+                transform: scale(1.03);
+            }
         }
 
         .grid-painel {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
             grid-template-rows: repeat(2, 1fr);
-            gap: 15px;
+            gap: 10px;
             flex-grow: 1;
             padding: 10px 0;
+            align-content: center;
+            min-height: 0;
         }
 
         .btn {
             background: linear-gradient(145deg, #21262d, #161b22);
-            color: #8b949e;
-            border: 3px solid #30363d;
-            border-radius: 12px;
+            color: #ffffff;
+            border: 3px solid #4a5568;
+            border-radius: 14px;
             cursor: pointer;
-            transition: all 0.15s ease;
+            transition: all 0.12s ease;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            box-shadow: inset 0 4px 6px rgba(255,255,255,0.03), 0 6px 10px rgba(0,0,0,0.4);
+            box-shadow: inset 0 3px 5px rgba(255, 255, 255, 0.04), 0 6px 12px rgba(0, 0, 0, 0.5);
             position: relative;
             overflow: hidden;
+            padding: 8px 4px;
+            min-width: 0;
+            min-height: 0;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 40%;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.07) 0%, transparent 100%);
+            border-radius: 11px 11px 0 0;
+            pointer-events: none;
         }
 
         .btn svg {
-            width: 48px;
-            height: 48px;
-            fill: currentColor;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+            width: clamp(40px, 7vw, 55px);
+            height: clamp(40px, 7vw, 55px);
+            fill: #ffffff;
+            stroke: #ffffff;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
             transition: transform 0.1s ease;
+            position: relative;
+            z-index: 1;
+            flex-shrink: 0;
         }
 
         .btn:active svg {
-            transform: scale(0.92);
+            transform: scale(0.9);
+            filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
         }
 
         .btn-label {
-            font-size: 0.7rem;
+            font-size: clamp(0.7rem, 1.3vw, 0.9rem);
             margin-top: 6px;
-            font-weight: bold;
-            letter-spacing: 0.5px;
+            font-weight: 700;
+            letter-spacing: 1px;
             text-transform: uppercase;
+            color: #ffffff;
+            text-shadow: 0 2px 3px rgba(0, 0, 0, 0.6);
+            position: relative;
+            z-index: 1;
+            line-height: 1.1;
+            text-align: center;
+            word-break: break-word;
         }
 
-        /* Estados Ativos com Cores Vibrantes para Destaque na Live */
-        .btn.active.blue {
-            background: linear-gradient(145deg, rgba(0,229,255,0.2), rgba(0,136,204,0.4));
-            color: #00e5ff;
-            border-color: #00e5ff;
-            box-shadow: 0 0 25px rgba(0,229,255,0.6), inset 0 0 15px rgba(0,229,255,0.3);
+        .btn:active {
+            transform: translateY(3px);
+            box-shadow: inset 0 3px 5px rgba(255, 255, 255, 0.04), 0 3px 6px rgba(0, 0, 0, 0.5);
         }
 
-        .btn.active.green {
-            background: linear-gradient(145deg, rgba(0,255,102,0.2), rgba(0,180,60,0.4));
-            color: #00ff66;
-            border-color: #00ff66;
-            box-shadow: 0 0 25px rgba(0,255,102,0.6), inset 0 0 15px rgba(0,255,102,0.3);
+        /* Estados Ativos com Brilho Azul */
+        .btn.active {
+            background: linear-gradient(145deg, #1a3a5c, #0d2a4a) !important;
+            color: #ffffff !important;
+            border-color: #00aaff !important;
+            border-width: 3px !important;
+            box-shadow: 0 0 25px rgba(0, 170, 255, 0.9), 0 0 45px rgba(0, 170, 255, 0.6), 0 0 65px rgba(0, 170, 255, 0.3), inset 0 0 20px rgba(0, 170, 255, 0.3), 0 6px 12px rgba(0, 0, 0, 0.5) !important;
+            animation: brilhoAtivo 1s ease-in-out infinite alternate;
+            transform: translateY(2px);
         }
 
-        .btn.active.amber {
-            background: linear-gradient(145deg, rgba(255,170,0,0.2), rgba(200,120,0,0.4));
-            color: #ffaa00;
-            border-color: #ffaa00;
-            box-shadow: 0 0 25px rgba(255,170,0,0.6), inset 0 0 15px rgba(255,170,0,0.3);
+        @keyframes brilhoAtivo {
+            0% {
+                box-shadow: 0 0 20px rgba(0, 170, 255, 0.8), 0 0 40px rgba(0, 170, 255, 0.5), 0 0 55px rgba(0, 170, 255, 0.2), inset 0 0 15px rgba(0, 170, 255, 0.2), 0 6px 12px rgba(0, 0, 0, 0.5);
+            }
+            100% {
+                box-shadow: 0 0 35px rgba(0, 170, 255, 1), 0 0 60px rgba(0, 170, 255, 0.8), 0 0 85px rgba(0, 170, 255, 0.5), inset 0 0 30px rgba(0, 170, 255, 0.5), 0 6px 12px rgba(0, 0, 0, 0.5);
+            }
+        }
+
+        .btn.active svg {
+            fill: #ffffff;
+            stroke: #00aaff;
+            filter: drop-shadow(0 0 12px rgba(0, 170, 255, 0.9)) drop-shadow(0 0 25px rgba(0, 170, 255, 0.6)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+            animation: iconeBrilho 1s ease-in-out infinite alternate;
+        }
+
+        @keyframes iconeBrilho {
+            0% {
+                filter: drop-shadow(0 0 8px rgba(0, 170, 255, 0.7)) drop-shadow(0 0 20px rgba(0, 170, 255, 0.4)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+            }
+            100% {
+                filter: drop-shadow(0 0 18px rgba(0, 170, 255, 1)) drop-shadow(0 0 35px rgba(0, 170, 255, 0.8)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+            }
+        }
+
+        .btn.active .btn-label {
+            text-shadow: 0 0 10px rgba(0, 170, 255, 0.8), 0 0 20px rgba(0, 170, 255, 0.4), 0 2px 3px rgba(0, 0, 0, 0.6);
         }
 
         .status-bar {
@@ -139,14 +218,105 @@
             background: #0d1117;
             padding: 8px 15px;
             border-radius: 8px;
-            font-size: 0.75rem;
-            border: 1px solid #21262d;
-            color: #8b949e;
+            font-size: clamp(0.65rem, 1.2vw, 0.8rem);
+            border: 2px solid #21262d;
+            color: #ffffff;
+            font-weight: 600;
+            letter-spacing: 1px;
+            flex-shrink: 0;
+            flex-wrap: wrap;
+            gap: 5px;
+            min-height: 35px;
+            align-items: center;
         }
 
         .status-on {
-            color: #00ff66;
-            font-weight: bold;
+            color: #00aaff;
+            font-weight: 900;
+            text-shadow: 0 0 10px rgba(0, 170, 255, 0.6);
+            letter-spacing: 1.5px;
+        }
+
+        @media (max-width: 600px) and (orientation: landscape) {
+            .grid-painel {
+                gap: 6px;
+                padding: 6px 0;
+            }
+            .btn {
+                border-radius: 10px;
+                padding: 5px 2px;
+                border-width: 2px;
+            }
+            .btn svg {
+                width: clamp(30px, 6vw, 40px);
+                height: clamp(30px, 6vw, 40px);
+            }
+            .btn-label {
+                font-size: clamp(0.55rem, 1vw, 0.65rem);
+                margin-top: 3px;
+                letter-spacing: 0.5px;
+            }
+            .multiplex-container {
+                padding: 6px;
+                border-radius: 12px;
+                border-width: 3px;
+            }
+            .header {
+                padding-bottom: 5px;
+                min-height: 30px;
+            }
+            .header h1 {
+                font-size: clamp(0.9rem, 2vw, 1.2rem);
+                letter-spacing: 1.5px;
+            }
+            .live-badge {
+                font-size: clamp(0.55rem, 1vw, 0.65rem);
+                padding: 3px 8px;
+                letter-spacing: 1px;
+            }
+            .status-bar {
+                font-size: clamp(0.5rem, 1vw, 0.6rem);
+                padding: 5px 10px;
+                min-height: 25px;
+            }
+        }
+
+        @media (min-width: 768px) and (orientation: landscape) {
+            .grid-painel {
+                gap: 14px;
+                padding: 14px 0;
+            }
+            .btn {
+                border-radius: 16px;
+                padding: 12px 6px;
+            }
+            .btn svg {
+                width: clamp(50px, 8vw, 65px);
+                height: clamp(50px, 8vw, 65px);
+            }
+            .btn-label {
+                font-size: clamp(0.8rem, 1.5vw, 1rem);
+                margin-top: 8px;
+            }
+            .multiplex-container {
+                padding: 14px;
+                border-radius: 20px;
+            }
+        }
+
+        @media (orientation: portrait) {
+            .grid-painel {
+                grid-template-columns: repeat(3, 1fr);
+                grid-template-rows: repeat(4, 1fr);
+                gap: 8px;
+            }
+            .btn svg {
+                width: clamp(35px, 8vw, 50px);
+                height: clamp(35px, 8vw, 50px);
+            }
+            .btn-label {
+                font-size: clamp(0.6rem, 1.5vw, 0.75rem);
+            }
         }
     </style>
 </head>
@@ -154,88 +324,130 @@
 
     <div class="multiplex-container">
         <div class="header">
-            <h1>Painel Multiplex • Cockpit</h1>
-            <div class="live-badge">LIVE MODE</div>
+            <h1>Painel Multiplex</h1>
+            <div class="live-badge">AO VIVO</div>
         </div>
 
         <div class="grid-painel">
-            <!-- 1. Luz Salão -->
-            <button class="btn blue" onclick="toggleBtn(this)">
-                <svg viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M11,6H13V13H11V6M11,15H13V17H11V15Z"/></svg>
+            <!-- 1. Salão -->
+            <button class="btn" onclick="toggleBtn(this)">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M11,6H13V13H11V6M11,15H13V17H11V15Z"/>
+                </svg>
                 <span class="btn-label">Salão</span>
             </button>
 
-            <!-- 2. Luz Corredor -->
-            <button class="btn blue" onclick="toggleBtn(this)">
-                <svg viewBox="0 0 24 24"><path d="M19,3H5C3.89,3 3,3.89 3,5V19C3,20.1 3.9,21 5,21H19C20.1,21 21,20.1 21,19V5C21,3.89 20.1,3 19,3M11,5H13V19H11V5M5,5H9V19H5V5M15,5H19V19H15V5Z"/></svg>
+            <!-- 2. Corredor -->
+            <button class="btn" onclick="toggleBtn(this)">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M19,3H5C3.89,3 3,3.89 3,5V19C3,20.1 3.9,21 5,21H19C20.1,21 21,20.1 21,19V5C21,3.89 20.1,3 19,3M11,5H13V19H11V5M5,5H9V19H5V5M15,5H19V19H15V5Z"/>
+                </svg>
                 <span class="btn-label">Corredor</span>
             </button>
 
-            <!-- 3. Luz Poltrona -->
-            <button class="btn green" onclick="toggleBtn(this)">
-                <svg viewBox="0 0 24 24"><path d="M6,2H18A2,2 0 0,1 20,4V10A2,2 0 0,1 18,12H17V14H19V20H17V22H15V20H9V22H7V20H5V14H7V12H6A2,2 0 0,1 4,10V4A2,2 0 0,1 6,2M6,4V10H18V4H6M6,14V18H18V14H6Z"/></svg>
-                <span class="btn-label">Poltrona</span>
+            <!-- 3. Poltronas -->
+            <button class="btn" onclick="toggleBtn(this)">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M6,2H18A2,2 0 0,1 20,4V10A2,2 0 0,1 18,12H17V14H19V20H17V22H15V20H9V22H7V20H5V14H7V12H6A2,2 0 0,1 4,10V4A2,2 0 0,1 6,2M6,4V10H18V4H6M6,14V18H18V14H6Z"/>
+                </svg>
+                <span class="btn-label">Poltronas</span>
             </button>
 
             <!-- 4. Leitura -->
-            <button class="btn green" onclick="toggleBtn(this)">
-                <svg viewBox="0 0 24 24"><path d="M12,3A9,9 0 0,0 3,12H5A7,7 0 0,1 12,5V3M19,12A7,7 0 0,1 12,19V21A9,9 0 0,0 21,12H19M12,8A4,4 0 0,0 8,12H10A2,2 0 0,1 12,10V8Z"/></svg>
+            <button class="btn" onclick="toggleBtn(this)">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12,3A9,9 0 0,0 3,12H5A7,7 0 0,1 12,5V3M19,12A7,7 0 0,1 12,19V21A9,9 0 0,0 21,12H19M12,8A4,4 0 0,0 8,12H10A2,2 0 0,1 12,10V8Z"/>
+                </svg>
                 <span class="btn-label">Leitura</span>
             </button>
 
-            <!-- 5. Wi-Fi -->
-            <button class="btn blue" onclick="toggleBtn(this)">
-                <svg viewBox="0 0 24 24"><path d="M12,3C7.79,3 3.7,4.41 0.38,7L2.25,9.39C5.03,7.27 8.39,6 12,6C15.61,6 18.97,7.27 21.75,9.39L23.62,7C20.3,4.41 16.21,3 12,3M12,9C9.3,9 6.75,10 4.72,11.66L6.59,14.05C8.12,12.82 10,12 12,12C14,12 15.88,12.82 17.41,14.05L19.28,11.66C17.25,10 14.7,9 12,9M12,15A3,3 0 0,0 9,18A3,3 0 0,0 12,21A3,3 0 0,0 15,18A3,3 0 0,0 12,15Z"/></svg>
-                <span class="btn-label">Wi-Fi</span>
+            <!-- 5. WiFi -->
+            <button class="btn" onclick="toggleBtn(this)">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12,3C7.79,3 3.7,4.41 0.38,7L2.25,9.39C5.03,7.27 8.39,6 12,6C15.61,6 18.97,7.27 21.75,9.39L23.62,7C20.3,4.41 16.21,3 12,3M12,9C9.3,9 6.75,10 4.72,11.66L6.59,14.05C8.12,12.82 10,12 12,12C14,12 15.88,12.82 17.41,14.05L19.28,11.66C17.25,10 14.7,9 12,9M12,15A3,3 0 0,0 9,18A3,3 0 0,0 12,21A3,3 0 0,0 15,18A3,3 0 0,0 12,15Z"/>
+                </svg>
+                <span class="btn-label">WiFi</span>
             </button>
 
-            <!-- 6. Tomada USB -->
-            <button class="btn blue" onclick="toggleBtn(this)">
-                <svg viewBox="0 0 24 24"><path d="M15,7V4H17V2H13V4H15V7H9V4H11V2H7V4H9V7H5V9H19V7H15M7,11V22H17V11H7M9,13H15V20H9V13Z"/></svg>
+            <!-- 6. USB -->
+            <button class="btn" onclick="toggleBtn(this)">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M15,7V4H17V2H13V4H15V7H9V4H11V2H7V4H9V7H5V9H19V7H15M7,11V22H17V11H7M9,13H15V20H9V13Z"/>
+                </svg>
                 <span class="btn-label">USB</span>
             </button>
 
             <!-- 7. Luz Noturna -->
-            <button class="btn amber" onclick="toggleBtn(this)">
-                <svg viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20V4Z"/></svg>
-                <span class="btn-label">Noturna</span>
+            <button class="btn" onclick="toggleBtn(this)">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20V4Z"/>
+                </svg>
+                <span class="btn-label">Luz Noturna</span>
             </button>
 
             <!-- 8. Banheiro -->
-            <button class="btn amber" onclick="toggleBtn(this)">
-                <svg viewBox="0 0 24 24"><path d="M7,2H17A2,2 0 0,1 19,4V20A2,2 0 0,1 17,22H7A2,2 0 0,1 5,20V4A2,2 0 0,1 7,2M11,4H13V6H11V4M9,8H15V10H9V8M12,12A2,2 0 0,1 14,14V19H12V14H10V19H8V14A2,2 0 0,1 10,12H12Z"/></svg>
+            <button class="btn" onclick="toggleBtn(this)">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M7,2H17A2,2 0 0,1 19,4V20A2,2 0 0,1 17,22H7A2,2 0 0,1 5,20V4A2,2 0 0,1 7,2M11,4H13V6H11V4M9,8H15V10H9V8M12,12A2,2 0 0,1 14,14V19H12V14H10V19H8V14A2,2 0 0,1 10,12H12Z"/>
+                </svg>
                 <span class="btn-label">Banheiro</span>
             </button>
 
-            <!-- 9. Ventilação Baixa -->
-            <button class="btn blue" onclick="setVent('baixa', this)">
-                <svg viewBox="0 0 24 24"><path d="M12,10C11,10 10,11 10,12C10,13 11,14 12,14C13,14 14,13 14,12C14,11 13,10 12,10M12,2C10.89,2 10,2.89 10,4V5.08C7.11,5.56 5,8.04 5,11C5,14.31 7.69,17 11,17V21H13V17C16.31,17 19,14.31 19,11C19,8.04 16.89,5.56 14,5.08V4C14,2.89 13.11,2 12,2Z"/></svg>
-                <span class="btn-label">Vent. Baixa</span>
+            <!-- 9. Ventilação 1 -->
+            <button class="btn" onclick="toggleBtn(this)">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12,10C11,10 10,11 10,12C10,13 11,14 12,14C13,14 14,13 14,12C14,11 13,10 12,10M12,2C10.89,2 10,2.89 10,4V5.08C7.11,5.56 5,8.04 5,11C5,14.31 7.69,17 11,17V21H13V17C16.31,17 19,14.31 19,11C19,8.04 16.89,5.56 14,5.08V4C14,2.89 13.11,2 12,2Z"/>
+                </svg>
+                <span class="btn-label">Vent. 1</span>
             </button>
 
-            <!-- 10. Ventilação Alta -->
-            <button class="btn blue" onclick="setVent('alta', this)">
-                <svg viewBox="0 0 24 24"><path d="M12,8C10.34,8 9,9.34 9,11C9,12.66 10.34,14 12,14C13.66,14 15,12.66 15,11C15,9.34 13.66,8 12,8M12,2C9.79,2 8,3.79 8,6C8,6.8 8.24,7.54 8.65,8.18C6.04,9.25 4.19,11.83 4.19,14.81C4.19,18.78 7.42,22 11.39,22H13.61C17.58,22 20.81,18.78 20.81,14.81C20.81,11.83 18.96,9.25 16.35,8.18C16.76,7.54 17,6.8 17,6C17,3.79 15.21,2 13,2H12Z"/></svg>
-                <span class="btn-label">Vent. Alta</span>
+            <!-- 10. Ventilação 2 -->
+            <button class="btn" onclick="toggleBtn(this)">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12,8C10.34,8 9,9.34 9,11C9,12.66 10.34,14 12,14C13.66,14 15,12.66 15,11C15,9.34 13.66,8 12,8M12,2C9.79,2 8,3.79 8,6C8,6.8 8.24,7.54 8.65,8.18C6.04,9.25 4.19,11.83 4.19,14.81C4.19,18.78 7.42,22 11.39,22H13.61C17.58,22 20.81,18.78 20.81,14.81C20.81,11.83 18.96,9.25 16.35,8.18C16.76,7.54 17,6.8 17,6C17,3.79 15.21,2 13,2H12Z"/>
+                </svg>
+                <span class="btn-label">Vent. 2</span>
             </button>
         </div>
 
         <div class="status-bar">
             <span>STATUS: <span class="status-on">TRANSMISSÃO AO VIVO</span></span>
-            <span>ORIENTAÇÃO: HORIZONTAL (PAISAGEM)</span>
+            <span>ORIENTAÇÃO: PAISAGEM</span>
         </div>
     </div>
 
     <script>
         function toggleBtn(btn) {
             btn.classList.toggle('active');
+
+            if (window.navigator && window.navigator.vibrate) {
+                window.navigator.vibrate(20);
+            }
+
+            const label = btn.querySelector('.btn-label').textContent;
+            const status = btn.classList.contains('active') ? 'LIGADO' : 'DESLIGADO';
+            console.log(`Botão ${label}: ${status}`);
         }
 
-        function setVent(nivel, btn) {
-            const ventBtns = document.querySelectorAll('.grid-painel button:nth-last-child(-n+2)');
-            ventBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-        }
+        // Prevenir zoom e gestos indesejados
+        document.addEventListener('gesturestart', function(e) {
+            e.preventDefault();
+        });
+        document.addEventListener('gesturechange', function(e) {
+            e.preventDefault();
+        });
+        document.addEventListener('gestureend', function(e) {
+            e.preventDefault();
+        });
+
+        document.querySelectorAll('.btn').forEach(btn => {
+            btn.addEventListener('touchstart', function(e) {
+                e.stopPropagation();
+            }, { passive: false });
+            btn.addEventListener('touchmove', function(e) {
+                e.preventDefault();
+            }, { passive: false });
+        });
     </script>
 </body>
 </html>
